@@ -48,6 +48,8 @@ class SearchBar extends Component {
   }
 
 
+  
+
   render() {
     let editedSummary = this.state.summary.replace(/(<p>|<b>|<\/p>|<\/b>)/g, '')
 
@@ -60,7 +62,6 @@ class SearchBar extends Component {
           type="text"
           ref="query"
           onChange={this.updateSearchHandler} />
-        <button type="submit">Search</button>
         </form>
         <SearchResults
         showTitle={this.state.title}
