@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 
 import SearchResults from '../SearchResults/SearchResults';
+import AddButton from '../AddButton/AddButton';
 import axios from 'axios';
+
+
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: ' ',
+      term: ' ',
       title: ' ',
       summary: ' ',
       rating: ' ',
@@ -42,13 +45,9 @@ class SearchBar extends Component {
       });
       console.log(response.data.genres)
     })
-    // .catch(error => {
-    //   console.log('Error fetching or parsing data'(error))
-    // })
   }
 
 
-  
 
   render() {
     let editedSummary = this.state.summary.replace(/(<p>|<b>|<\/p>|<\/b>)/g, '')
@@ -57,7 +56,8 @@ class SearchBar extends Component {
 
     return(
       <div>
-        <form onSubmit={this.submitHandler}>
+        <form
+          onSubmit={this.submitHandler}>
         <input
           type="text"
           ref="query"
@@ -70,6 +70,10 @@ class SearchBar extends Component {
         showImage={this.state.image}
         showGenre={spiltGenre}
       />
+      <AddButton
+        showTitle={this.state.title}
+        showGenre={spiltGenre}
+       />
       </div>
     )
   }

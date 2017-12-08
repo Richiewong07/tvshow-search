@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import Searchbar from '../Searchbar/Searchbar';
-import AddButton from '../AddButton/AddButton';
+
+
 
 class Layout extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class Layout extends Component {
       <div>
         <div>Toolbar</div>
         <Searchbar/>
-        <AddButton/>
       </div>
     )
   }

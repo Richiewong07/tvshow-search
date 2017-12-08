@@ -4,9 +4,9 @@ import './App.css';
 import {BrowserRouter, Route, Link} from 'react-router-dom';
 import Layout from './Layout/Layout'
 import WatchListPage from './WatchListPage/WatchListPage';
-import MoreInfoPage from './MoreInfoPage/MoreInfoPage';
+import setup_firebase from './firebase-setup';
 
-
+setup_firebase();
 
 class App extends Component {
 
@@ -16,10 +16,10 @@ class App extends Component {
         <div>
           <ul>
             <li><Link to="/">Home</Link></li>
+            <li><Link to="/watchlistpage">Watch List Page</Link></li>
           </ul>
           <Route exact path="/" component={Layout}/>
-          <Route path="/watchlist" component={WatchListPage}/>
-          <Route path="/moreinfo" component={MoreInfoPage}/>
+          <Route path="/watchlistpage" component={WatchListPage}/>
         </div>
       </BrowserRouter>
     );
