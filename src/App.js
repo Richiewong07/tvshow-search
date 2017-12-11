@@ -1,27 +1,44 @@
 import React, { Component } from 'react';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import './App.css';
 
 import {BrowserRouter, Route, Link} from 'react-router-dom';
 import Layout from './Layout/Layout'
 import WatchListPage from './WatchListPage/WatchListPage';
-import setup_firebase from './firebase-setup';
+import { auth } from './firebase-setup';
 
-setup_firebase();
+
+
+
 
 class App extends Component {
+  login () {
+    auth()
+      .then(function (user) {
+        console.log(user);
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
+  }
 
   render() {
     return (
-      <BrowserRouter>
-        <div>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/watchlistpage">Watch List Page</Link></li>
-          </ul>
-          <Route exact path="/" component={Layout}/>
-          <Route path="/watchlistpage" component={WatchListPage}/>
-        </div>
-      </BrowserRouter>
+      <MuiThemeProvider>
+        <BrowserRouter>
+          <div>
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/watchlistpage">Watch List Page</Link></li>
+              <li><button onClick={this.login}>Login</button></li>
+            </ul>
+            <Route exact path="/" component={Layout}/>
+            <Route path="/watchlistpage" component={WatchListPage}/>
+          </div>
+        </BrowserRouter>
+      </MuiThemeProvider>
     );
   }
 }

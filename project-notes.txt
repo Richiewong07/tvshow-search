@@ -1,4 +1,11 @@
-React Project:
+TO DO LIST: REACT PROJECT
+  X SET UP FIREBASE ADD/RETRIEVE DATA
+  X SET UP USER AUTH
+  - SET UP HANDLER TO DELETE DATA FROM FIREBASE
+  - FIX ERROR WITH RETRIEVING API REQUESTS
+  - CHANGE ONCHANGE EVENT TO CLICK EVENT TO RETRIEVE API REQUEST
+  - STYLE PAGE
+
 
 
 APi:
@@ -17,7 +24,17 @@ Routing:
 
 
 Firebase:
-	- axios
+
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    }
+  }
+}
 
 
 CSS Modules:
@@ -43,3 +60,71 @@ Life Cycle Events:
 
   - componentWillUnmount:
       called when the compnent is removed
+
+
+
+
+
+Adding Data:
+
+// postDataHandler = (props) => {
+//   // A show entry
+//   var showData = {
+//     title: this.props.showTitle,
+//     genre: this.props.showGenre
+//   };
+//   // Get a new key for a new show
+//   var showKey = firebase.database().ref().child('shows').push().key;
+//   // Write the new post's data simultaneously in the shows list
+//   var updates = {};
+//   updates['shows' + showKey] = showData;
+//
+//   return firebase.database().ref().update(updates);
+// }
+
+
+
+
+Retrieving Data:
+
+// componentDidMount() {
+//   const rootRef = database.ref('shows/');
+//   rootRef.on('value', snapshot => {
+//     const previousList = this.state.listOfShows;
+//     previousList.append({
+//       id: snapshot.key,
+//       title: snapshot.val().title,
+//       genre: snapshot.val().genre
+//     });
+//     this.setState({
+//       listOfShows: previousList
+//     });
+//   });
+// }
+
+// componentDidMount() {
+//   const rootRef = firebase.database().ref('shows');
+//   rootRef.on('value', snapshot => {
+//     const newList = {
+//       id: snapshot.showKey,
+//       title: snapshot.val().title,
+//       genre: snapshot.val().genre
+//     };
+//     this.setState(previousState => {
+//       listOfShows: previousState.listOfShows.append(newList);
+//     });
+//   })
+// }
+
+
+render() {
+  // const listOfShows = this.state.listOfShows.map(show =>
+  //   <div>
+  //     {show.id}
+  //     {show.title}
+  //     {show.genre}
+  //   </div>
+  // );
+  return (
+    // <div>{listOfShows}</div>
+  );

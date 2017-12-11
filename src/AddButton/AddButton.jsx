@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
 
-import firebase from 'firebase';
+import database, {User} from '../firebase-setup.js'
+
+// import firebase from 'firebase';
 
 
 class AddButton extends Component {
 
+
+
+
   postDataHandler = () => {
-    const data = {
+    database.ref('shows/' + User.user.uid).push({
       title: this.props.showTitle,
       genre: this.props.showGenre
-    }
-    firebase.database().ref('shows').set(data);
+    });
+    // ref.set({
+    //   title: this.props.showTitle,
+    //   genre: this.props.showGenre
+    // });
   }
+
 
   render() {
     return(
@@ -26,6 +35,8 @@ class AddButton extends Component {
 }
 
 export default AddButton;
+
+
 
 // const addButton = withRouter(({history}) => (
 //
