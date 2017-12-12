@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import Searchbar from '../Searchbar/Searchbar';
 
-import AppBar from 'material-ui/AppBar';
-
 import database, {User} from '../firebase-setup.js';
+
+import classes from './Layout.css';
 
 class Layout extends Component {
   constructor(props) {
@@ -22,14 +22,13 @@ class Layout extends Component {
     } else {
       setTimeout(() => {
         this.check_login();
-      }, 10000);
+      }, 300);
     }
   }
 
   render () {
     return(
-      <div>
-        <AppBar title = "TV Show Searcher"/>
+      <div className={classes.Background}>
         <Searchbar/>
       </div>
     )

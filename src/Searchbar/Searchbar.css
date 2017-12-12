@@ -1,0 +1,11 @@
+.Background {
+  background-color: white;
+}
+
+.Search {
+  width: 30%;
+  line-height: 3em;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

@@ -1,3 +1,7 @@
-.SearchResults {
-  text-align: center
+.Background {
+  background-color: white;
+}
+
+.Image {
+  padding-top: 25px;
 }

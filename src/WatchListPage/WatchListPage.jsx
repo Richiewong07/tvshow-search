@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 
-// import AddedShows from '../AddedShows/AddedShows';
-
 import database, {User} from '../firebase-setup.js'
+import classes from './WatchListPage.css'
 
-// import firebase from 'firebase';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 
 class WatchListPage extends Component {
   constructor(props) {
@@ -14,76 +20,74 @@ class WatchListPage extends Component {
     };
   }
 
+  getShows () {
+    if (User.user && User.user.uid) {
+      database.ref('shows/' + User.user.uid).on('child_added', snapshot => {
+        const newList = this.state.listOfShows;
+        newList.push({
+          showKey: snapshot.key,
+          title: snapshot.val().title,
+          genre: snapshot.val().genre
+        });
+        this.setState({
+          listOfShows: newList
+        });
+        // console.log('test', JSON.stringify(newList))
+      });
+    } else {
+      setTimeout(() => {
+        this.getShows();
+      }, 300);
+    }
+  }
   componentDidMount() {
-    database.ref('shows/' + User.user.uid).on('child_added', snapshot => {
-      const newList = this.state.listOfShows;
-      newList.push({
-        showId: snapshot.key,
-        title: snapshot.val().title,
-        genre: snapshot.val().genre
-      });
-      this.setState({
-        listOfShows: newList
-      });
-      console.log('test', JSON.stringify(newList))
+    this.getShows();
+  }
+
+  deleteHandler(index) {
+    let showItem = this.state.listOfShows[index];
+    database.ref('shows/' + User.user.uid + '/' + showItem.showKey).remove();
+    this.state.listOfShows.splice(index, 1);
+    this.setState({
+      listOfShows: this.state.listOfShows
     });
   }
 
-
-  // removeDataHandler(key) {
-  //   database.ref().child(key).remove();
-  //   const = newListArray =
-  // }
-
-
-
-  // componentDidMount() {
-  //   database.ref('shows/' + User.user.uid).once('value', snapshot => {
-  //     snapshot.forEach(child => {
-  //       this.setState({
-  //         showID: this.state.showID.concat([child.key]),
-  //         title: this.state.title.concat([child.val().title]),
-  //         genre: this.state.genre.concat([child.val().genre])
-  //       });
-  //
-  //       const showList = this.state.showID.map((showList, index) =>
-  //         <div key={index}>
-  //           {this.state.title[index]}
-  //           {this.state.genre[index]}
-  //         </div>
-  //       );
-  //       this.setState({
-  //         shows: showList
-  //       });
-  //     });
-  //   });
-  // };
-
-  // componentWillMount() {
-  //   database.ref('shows/' + User.user.uid).once('value').then((snapshot) => {
-  //     var shows_info = snapshot.val();
-  //     this.setState({
-  //       title: shows_info.title,
-  //       genre: shows_info.genre
-  //     });
-  //   });
-  // }
-
+  deleteSelected (event) {
+    for (let i=0; i < this.state.listOfShows.length; i++){
+      if (this.refs['row' + i].props.selected) {
+        this.deleteHandler(i);
+      }
+    }
+  }
 
 
 
   render() {
-    const listOfShows = this.state.listOfShows.map((show) =>
-      <li
-        key={show.showId}
-        onClick={this.removeDataHandler}
-        >{show.title} {show.genre}
-      </li>
+    const listOfShows = this.state.listOfShows.map((show, index) =>
+      <TableRow
+        ref={'row' + index}
+        key={show.showKey}
+        onClick={this.deleteHandler.bind(this, index)}>
+        <TableRowColumn>{show.title}</TableRowColumn>
+        <TableRowColumn>{show.genre}</TableRowColumn>
+      </TableRow>
     );
 
     return (
-      <div>
-        {listOfShows}
+      <div className={classes.Background}>
+        <Table multiSelectable={true}>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Title</TableHeaderColumn>
+              <TableHeaderColumn>Genre</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody deselectOnClickaway={false}>
+            {listOfShows}
+          </TableBody>
+        </Table>
+        <button onClick={(e) => this.deleteSelected(e)}>Delete Selected</button>
       </div>
     );
   }

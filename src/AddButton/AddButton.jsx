@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
+import FlatButton from 'material-ui/FlatButton';
+
 import database, {User} from '../firebase-setup.js'
 
 // import firebase from 'firebase';
 
 
 class AddButton extends Component {
-
-
 
 
   postDataHandler = () => {
@@ -25,10 +25,12 @@ class AddButton extends Component {
   render() {
     return(
       <div>
-        <button
+        <FlatButton
+          label="Add to WatchList"
+          fullWidth={true}
           onClick={this.postDataHandler}
-          type='submit'>Add to Watch List
-        </button>
+          type='submit'>
+        </FlatButton>
       </div>
     );
   }

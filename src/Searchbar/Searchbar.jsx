@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 
-
-
-
 import SearchResults from '../SearchResults/SearchResults';
 import AddButton from '../AddButton/AddButton';
 import axios from 'axios';
 
-
+import classes from './Searchbar.css';
 
 class Searchbar extends Component {
   constructor(props) {
@@ -26,7 +23,6 @@ class Searchbar extends Component {
     this.search();
   }
 
-
   updateSearchHandler = (event) => {
     this.search(this.refs.query.value);
   }
@@ -38,28 +34,20 @@ class Searchbar extends Component {
         title: response.data.name,
         summary: response.data.summary,
         rating: response.data.rating.average,
-        image: response.data.image.medium,
+        image: response.data.image ? response.data.image.medium : "No image",
         genre: response.data.genres,
       });
-      // console.log(response.data.genres)
     })
   }
-
-
-
-  // submitHandler = (event) => {
-  //   console.log('Submitted: ', this.state.searchTerm);
-  //   event.preventDefault();
-  // }
-
 
   render() {
     let editedSummary = this.state.summary.replace(/(<p>|<b>|<\/p>|<\/b>)/g, '')
     let spiltGenre = this.state.genre.join(', ');
 
     return(
-      <div>
+      <div className={classes.Background}>
         <input
+          className={classes.Search}
           type="text"
           ref="query"
           onChange={this.updateSearchHandler}/>
