@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import database, {User} from '../firebase-setup.js'
 import classes from './WatchListPage.css'
+// import { Button } from 'react-bootstrap';
+
 
 import {
   Table,
@@ -27,7 +29,8 @@ class WatchListPage extends Component {
         newList.push({
           showKey: snapshot.key,
           title: snapshot.val().title,
-          genre: snapshot.val().genre
+          genre: snapshot.val().genre,
+          image: snapshot.val().image
         });
         this.setState({
           listOfShows: newList
@@ -69,8 +72,10 @@ class WatchListPage extends Component {
         ref={'row' + index}
         key={show.showKey}
         onClick={this.deleteHandler.bind(this, index)}>
+        <TableRowColumn><img className={classes.Image} src={show.image} alt="poster"/></TableRowColumn>
         <TableRowColumn>{show.title}</TableRowColumn>
         <TableRowColumn>{show.genre}</TableRowColumn>
+        <TableRowColumn><button class="close pull-left muted" onClick={(e) => this.deleteSelected(e)}>&times;</button></TableRowColumn>
       </TableRow>
     );
 
@@ -79,15 +84,16 @@ class WatchListPage extends Component {
         <Table multiSelectable={true}>
           <TableHeader>
             <TableRow>
+              <TableHeaderColumn>Show Poster</TableHeaderColumn>
               <TableHeaderColumn>Title</TableHeaderColumn>
               <TableHeaderColumn>Genre</TableHeaderColumn>
+              <TableHeaderColumn>Delete</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody deselectOnClickaway={false}>
             {listOfShows}
           </TableBody>
         </Table>
-        <button onClick={(e) => this.deleteSelected(e)}>Delete Selected</button>
       </div>
     );
   }

@@ -1,2 +1,15 @@
 .Background {
+
+}
+
+.Image {
+  zoom: 40%;
+}
+
+.pull-left {
+  float: left;
+}
+
+.muted {
+  color: #FF0000;
 }

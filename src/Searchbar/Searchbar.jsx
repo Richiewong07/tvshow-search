@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 
 import SearchResults from '../SearchResults/SearchResults';
 import AddButton from '../AddButton/AddButton';
+import Aux from '../hoc/Aux';
 import axios from 'axios';
+
+import {Grid, Col, Row} from 'react-bootstrap';
 
 import classes from './Searchbar.css';
 
@@ -15,6 +18,8 @@ class Searchbar extends Component {
       summary: ' ',
       rating: ' ',
       image: ' ',
+      premiered: ' ',
+      network: ' ',
       genre: [],
     }
   }
@@ -36,6 +41,8 @@ class Searchbar extends Component {
         rating: response.data.rating.average,
         image: response.data.image ? response.data.image.medium : "No image",
         genre: response.data.genres,
+        premiered: response.data.premiered,
+        network: response.data.webChannel ? response.data.webChannel.name : "No Network Found",
       });
     })
   }
@@ -45,24 +52,38 @@ class Searchbar extends Component {
     let spiltGenre = this.state.genre.join(', ');
 
     return(
-      <div className={classes.Background}>
-        <input
-          className={classes.Search}
-          type="text"
-          ref="query"
-          onChange={this.updateSearchHandler}/>
+      <Aux>
+        <Grid className={classes.Background}>
+          <Row className="show-grid">
+            <Col xsHidden md={2}></Col>
+            <Col xs={6} md={8}>
+              <input
+                placeholder="Search For Show Title"
+                className={classes.Search}
+                type="text"
+                ref="query"
+                onChange={this.updateSearchHandler}/>
+            </Col>
+            <Col xsHidden md={2}></Col>
+          </Row>
+        </Grid>
 
-        <SearchResults
-        showTitle={this.state.title}
-        showSummary={editedSummary}
-        showRating={this.state.rating}
-        showImage={this.state.image}
-        showGenre={spiltGenre}/>
+        <div>
+          <SearchResults
+          showTitle={this.state.title}
+          showSummary={editedSummary}
+          showRating={this.state.rating}
+          showImage={this.state.image}
+          showGenre={spiltGenre}
+          showPremiered={this.state.premiered}
+          showNetwork={this.state.network}/>
 
-      <AddButton
-        showTitle={this.state.title}
-        showGenre={spiltGenre}/>
-      </div>
+        <AddButton
+          showTitle={this.state.title}
+          showGenre={spiltGenre}
+          showImage={this.state.image} />
+        </div>
+      </Aux>
     )
   }
 }

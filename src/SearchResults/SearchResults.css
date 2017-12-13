@@ -1,7 +1,16 @@
 .Background {
   background-color: white;
+  border-color: black;
 }
 
 .Image {
   padding-top: 25px;
+  padding-left: 50px;
+  padding-bottom: 25px;
+  margin: auto;
+  zoom: 110%;
 }
+
+/*.Column3 {
+  padding-left: 25px;
+}*/

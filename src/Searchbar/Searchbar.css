@@ -3,9 +3,9 @@
 }
 
 .Search {
-  width: 30%;
-  line-height: 3em;
+  width: 100%;
+  line-height: 2em;
   margin-top: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  /*padding-top: 10px;
+  padding-bottom: 10px;*/
 }
